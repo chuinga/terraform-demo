@@ -4,9 +4,14 @@ provider "aws" {
   
 }
 
+# Generate random suffix for bucket name
+resource "random_id" "bucket_suffix" {
+  byte_length = 4
+}
+
 # Create an S3 bucket
 resource "aws_s3_bucket" "udabucket" {
-  bucket = "cicd-terraform-demo-bucket20213"
+  bucket = "cicd-terraform-demo-bucket-${random_id.bucket_suffix.hex}"
 
   tags = {
     Name        = "CICD test bucket"
